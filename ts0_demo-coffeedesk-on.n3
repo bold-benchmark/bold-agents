@@ -1,0 +1,32 @@
+@prefix building: <http://127.0.1.1:8080/> .
+#@prefix building: <http://localhost:40200/ldbbc/> .
+
+@prefix brick: <http://buildsys.org/ontologies/Brick#> .
+@prefix bframe: <http://buildsys.org/ontologies/BrickFrame#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix http: <http://www.w3.org/2011/http#>.
+@prefix http_m: <http://www.w3.org/2011/http-methods#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+
+{ [] http:mthd http_m:GET; http:requestURI building:Room_CoffeeDesk . }
+{ ?x ssn:hasProperty ?prop . } => { [] http:mthd http_m:GET; http:requestURI ?prop . } .
+
+{
+  ?light a brick:Lighting_System ;
+    bframe:feeds building:Room_CoffeeDesk ;
+    ssn:hasProperty ?prop .
+  ?prop a sosa:ActuableProperty ; 
+    foaf:isPrimaryTopicOf ?ir ;
+    rdf:value "off" .
+}
+=>
+{
+  [] http:mthd http_m:PUT; http:requestURI ?ir ; http:body {
+    ?prop a ssn:Property , sosa:ObservableProperty , sosa:ActuableProperty ;
+      foaf:isPrimaryTopicOf ?ir ;
+      rdf:value "on" .
+  } .
+} .
+
