@@ -9,6 +9,7 @@
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
 @prefix ssn: <http://www.w3.org/ns/ssn/> .
 
+# Defining subdivisions of the building for scaling up and down the benchmark
 building:fiverooms bframe:hasPart
 building:Room_SOR42_F_8 , building:Room_SOR42_F_9 , building:Room_SOR42_F_21 , building:Room_SOR42_F_13 , building:Room_SOR42_F_16 .
 
@@ -36,8 +37,11 @@ building:Room_SOR42_F_4 ,
 building:Room_SOR42_F_6 ,
 building:Room_SOR42_F_20 .
 
+# The Wing_SOR46 is the largest part of Building 3 we are looking at.
+# So we need to GET the information about it.
 { [] http:mthd http_m:GET; http:requestURI building:Wing_SOR46 . }
 
+# Furthermore, we need to GET the information about all the Wing's parts.
 {
   building:Wing_SOR46 bframe:hasPart ?part .
 }
@@ -46,6 +50,7 @@ building:Room_SOR42_F_20 .
   [] http:mthd http_m:GET; http:requestURI ?part .
 } .
 
+# Furthermore, we need to GET the information about all the things in the Wing's parts.
 {
   building:Wing_SOR46 bframe:hasPart ?space .
   ?thing bframe:isLocatedIn ?space .
@@ -55,6 +60,8 @@ building:Room_SOR42_F_20 .
   [] http:mthd http_m:GET; http:requestURI ?thing .
 } .
 
+# As the Wing is not its own part, we need another rule to GET the information
+# about all the things directly in the Wing.
 {
   ?thing bframe:isLocatedIn building:Wing_SOR46 .
 }
@@ -64,8 +71,9 @@ building:Room_SOR42_F_20 .
 } .
 
 # Finally, GETs to the properties.
-# Their location of their thigns is specified in two ways.
+# Their location of their things is specified in two ways.
 # Moreover, they are connected to the their thing in three flavours.
+# Hence, six rules:
 {
   ?thing bframe:isLocatedIn building:Wing_SOR46 .
   ?thing ssn:hasProperty ?property .

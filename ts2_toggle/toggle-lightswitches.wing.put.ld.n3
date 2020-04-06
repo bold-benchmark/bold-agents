@@ -9,6 +9,15 @@
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
 @prefix ssn: <http://www.w3.org/ns/ssn/> .
 
+#
+# If there is a Luminance Command that acts on a property that is on
+# turn the property off. And vice versa.
+#
+# Two flavours of the same rule:
+#   1. The Luminance Command is somewhere that is an actual part of the Wing
+#   2. The Luminance Command is directly in the Wing
+#
+
 {
   ?command a brick:Luminance_Command ;
     sosa:actsOnProperty ?propcomm ;
