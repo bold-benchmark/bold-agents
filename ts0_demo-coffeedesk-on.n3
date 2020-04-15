@@ -11,7 +11,8 @@
 @prefix ssn: <http://www.w3.org/ns/ssn/> .
 
 { [] http:mthd http_m:GET; http:requestURI building:Room_CoffeeDesk . }
-{ ?x ssn:hasProperty ?prop . } => { [] http:mthd http_m:GET; http:requestURI ?prop . } .
+{ ?light bframe:feeds building:Room_CoffeeDesk . } => { [] http:mthd http_m:GET; http:requestURI ?light . } .
+{ ?light bframe:feeds building:Room_CoffeeDesk; ssn:hasProperty ?prop . } => { [] http:mthd http_m:GET; http:requestURI ?prop . } .
 
 {
   ?light a brick:Lighting_System ;
