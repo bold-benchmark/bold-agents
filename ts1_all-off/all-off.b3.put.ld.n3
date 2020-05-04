@@ -21,10 +21,12 @@
 #
 
 {
+  ?space bframe:isPartOf building:Building_B3 .
+
   ?command a brick:Luminance_Command ;
-    sosa:actsOnProperty ?propcomm ;
-    bframe:isLocatedIn ?room .
-  ?room bframe:isPartOf building:Wing_SOR46 .
+    sosa:actsOnProperty ?propcomm .
+  ?lightingOrSystem bframe:hasPoint ?command ;
+    bframe:feeds ?space .
 
   ?propcomm a ssn:Property , sosa:ObservableProperty , sosa:ActuableProperty ;
     foaf:isPrimaryTopicOf ?ir ;
@@ -41,8 +43,10 @@
 
 {
   ?command a brick:Luminance_Command ;
-    sosa:actsOnProperty ?propcomm ;
-    bframe:isLocatedIn building:Wing_SOR46 .
+    sosa:actsOnProperty ?propcomm .
+  ?lightingOrSystem bframe:hasPoint ?command ;
+    bframe:feeds building:Building_B3 .
+
   ?propcomm a ssn:Property , sosa:ObservableProperty , sosa:ActuableProperty ;
     foaf:isPrimaryTopicOf ?ir ;
     rdf:value ?val .
