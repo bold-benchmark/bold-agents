@@ -1,0 +1,29 @@
+@prefix bf: <http://buildsys.org/ontologies/BrickFrame#> .
+{ ?a bf:hasPart ?b .} =>
+    {?b bf:isPartOf ?a .} .
+{ ?a bf:isPartOf ?b .} =>
+    {?b bf:hasPart ?a .} .
+{?a bf:hasPoint ?b .} =>
+    {?b bf:isPointOf ?a .} .
+{?a bf:isPointOf ?b .} =>
+    {?b bf:hasPoint ?a .} .
+{?a bf:feeds ?b .} =>
+    {?b bf:isFedBy ?a .} .
+{?a bf:isFedBy ?b .} =>
+    {?b bf:feeds ?a .} .
+{?a bf:contains ?b .} =>
+    {?b bf:isLocatedIn ?a .} .
+{?a bf:isLocatedIn ?b .} =>
+    {?b bf:contains ?a .} .
+{?a bf:controls ?b .} =>
+    {?b bf:isControlledBy ?a .} .
+{?a bf:isControlledBy ?b .} =>
+    {?b bf:controls ?a .} .
+{?a bf:hasOutput ?b .} =>
+    {?b bf:isOutputOf ?a .} .
+{?a bf:hasInput ?b .} =>
+    {?b bf:isInputOf ?a .} .
+{?a bf:hasTagSet ?b .} =>
+    {?b bf:isTagSetOf ?a .} .
+{?a bf:hasToken ?b .} =>
+    {?b bf:isTokenOf ?a .} .
