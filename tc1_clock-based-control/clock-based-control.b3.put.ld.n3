@@ -36,7 +36,6 @@
 { ?x time:hour "18"^^xsd:integer . } => { ?x a ex:OfficeHourDateTimeDescription . } .
 { ?x time:hour "19"^^xsd:integer . } => { ?x a ex:OfficeHourDateTimeDescription . } .
 
-{ ?x time:hour "19"^^xsd:integer . } => { ?x a ex:SleepingHourDateTimeDescription . } .
 { ?x time:hour "20"^^xsd:integer . } => { ?x a ex:SleepingHourDateTimeDescription . } .
 { ?x time:hour "21"^^xsd:integer . } => { ?x a ex:SleepingHourDateTimeDescription . } .
 { ?x time:hour "22"^^xsd:integer . } => { ?x a ex:SleepingHourDateTimeDescription . } .
