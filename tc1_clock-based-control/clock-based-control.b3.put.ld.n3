@@ -14,15 +14,6 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix sim: <http://ti.rw.fau.de/sim#> .
 
-time:Monday    a ex:WorkingDay .
-time:Tuesday   a ex:WorkingDay .
-time:Wednesday a ex:WorkingDay .
-time:Thursday  a ex:WorkingDay .
-time:Friday    a ex:WorkingDay .
-
-time:Saturday  a ex:WeekendDay .
-time:Sunday    a ex:WeekendDay .
-
 { ?x time:hour  "0"^^xsd:integer . } => { ?x a ex:SleepingHourDateTimeDescription . } .
 { ?x time:hour  "1"^^xsd:integer . } => { ?x a ex:SleepingHourDateTimeDescription . } .
 { ?x time:hour  "2"^^xsd:integer . } => { ?x a ex:SleepingHourDateTimeDescription . } .
@@ -58,9 +49,7 @@ time:Sunday    a ex:WeekendDay .
 {
   <http://127.0.1.1:8080/sim> sim:currentTime ?time .
   ?time time:inDateTime ?instant .
-  ?instant a ex:SleepingHourDateTimeDescription ;
-    time:dayOfWeek ?day .
-  ?day a ex:WorkingDay .
+  ?instant a ex:SleepingHourDateTimeDescription .
 
   ?command a brick:Luminance_Command ;
     sosa:actsOnProperty ?propcomm .
@@ -76,9 +65,7 @@ time:Sunday    a ex:WeekendDay .
 {
   <http://127.0.1.1:8080/sim> sim:currentTime ?time .
   ?time time:inDateTime ?instant .
-  ?instant a ex:SleepingHourDateTimeDescription ;
-    time:dayOfWeek ?day .
-  ?day a ex:WorkingDay .
+  ?instant a ex:SleepingHourDateTimeDescription .
 
   ?command a brick:Luminance_Command ;
     sosa:actsOnProperty ?propcomm .
@@ -91,50 +78,11 @@ time:Sunday    a ex:WeekendDay .
   [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
 } .
 
-
-# Turn off stuff during the weekend
+# Turn on stuff on during office hours
 {
   <http://127.0.1.1:8080/sim> sim:currentTime ?time .
   ?time time:inDateTime ?instant .
-  ?instant time:dayOfWeek ?day .
-  ?day a ex:WeekendDay .
-
-  ?command a brick:Luminance_Command ;
-    sosa:actsOnProperty ?propcomm .
-  ?lightingOrSystem bframe:hasPoint ?command ;
-    bframe:feeds ?space .
-  ?space bframe:isPartOf building:Building_B3 .
-  ?propcomm  rdf:value ?val .
-}
-=>
-{
-  [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
-} .
-{
-  <http://127.0.1.1:8080/sim> sim:currentTime ?time .
-  ?time time:inDateTime ?instant .
-  ?instant time:dayOfWeek ?day .
-  ?day a ex:WeekendDay .
-
-  ?command a brick:Luminance_Command ;
-    sosa:actsOnProperty ?propcomm .
-  ?lightingOrSystem bframe:hasPoint ?command ;
-    bframe:feeds building:Building_B3 .
-  ?propcomm  rdf:value ?val .
-}
-=>
-{
-  [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
-} .
-
-
-# Turn on stuff on working days during office hours
-{
-  <http://127.0.1.1:8080/sim> sim:currentTime ?time .
-  ?time time:inDateTime ?instant .
-  ?instant a ex:OfficeHourDateTimeDescription ;
-    time:dayOfWeek ?day .
-  ?day a ex:WorkingDay .
+  ?instant a ex:OfficeHourDateTimeDescription .
 
   ?command a brick:Luminance_Command ;
     sosa:actsOnProperty ?propcomm .
@@ -150,9 +98,7 @@ time:Sunday    a ex:WeekendDay .
 {
   <http://127.0.1.1:8080/sim> sim:currentTime ?time .
   ?time time:inDateTime ?instant .
-  ?instant a ex:OfficeHourDateTimeDescription ;
-    time:dayOfWeek ?day .
-  ?day a ex:WorkingDay .
+  ?instant a ex:OfficeHourDateTimeDescription .
 
   ?command a brick:Luminance_Command ;
     sosa:actsOnProperty ?propcomm .
