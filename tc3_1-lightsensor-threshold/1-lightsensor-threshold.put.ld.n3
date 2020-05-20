@@ -23,7 +23,7 @@
 
 # Turn off stuff if the light outside is greater than 10 klux
 {
-  building:Building_B3 bframe:hasPart building:Floor_out .
+#  building:Building_B3 bframe:hasPart building:Floor_out . # kills the building subdivision scripts
   building:Floor_out bframe:hasPoint building:KNX_EXTERNAL_LUX .
   building:KNX_EXTERNAL_LUX sosa:observes ?luxProp .
 
@@ -42,7 +42,7 @@
   [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
 } .
 {
-  building:Building_B3 bframe:hasPart building:Floor_out .
+#  building:Building_B3 bframe:hasPart building:Floor_out . # kills the building subdivision scripts
   building:Floor_out bframe:hasPoint building:KNX_EXTERNAL_LUX .
   building:KNX_EXTERNAL_LUX sosa:observes ?luxProp .
 
@@ -62,7 +62,7 @@
 
 # Turn on stuff if outside light is below or equal to 10 klux
 {
-  building:Building_B3 bframe:hasPart building:Floor_out .
+#  building:Building_B3 bframe:hasPart building:Floor_out . # kills the building subdivision scripts
   building:Floor_out bframe:hasPoint building:KNX_EXTERNAL_LUX .
   building:KNX_EXTERNAL_LUX sosa:observes ?luxProp .
 
@@ -81,7 +81,7 @@
   [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "on" . } .
 } .
 {
-  building:Building_B3 bframe:hasPart building:Floor_out .
+#  building:Building_B3 bframe:hasPart building:Floor_out . # kills the building subdivision scripts
   building:Floor_out bframe:hasPoint building:KNX_EXTERNAL_LUX .
   building:KNX_EXTERNAL_LUX sosa:observes ?luxProp .
 
