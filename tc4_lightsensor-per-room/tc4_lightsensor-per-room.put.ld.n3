@@ -1,0 +1,106 @@
+
+@prefix building: <http://127.0.1.1:8080/> .
+
+@prefix brick: <http://buildsys.org/ontologies/Brick#> .
+@prefix bframe: <http://buildsys.org/ontologies/BrickFrame#> .
+@prefix http: <http://www.w3.org/2011/http#> .
+@prefix http_m: <http://www.w3.org/2011/http-methods#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix qudt: <http://qudt.org/schema/qudt#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix saref: <https://w3id.org/saref#> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix string: <http://www.w3.org/2000/10/swap/string#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix sim: <http://ti.rw.fau.de/sim#> .
+
+# Turn off stuff if there is nobody in the room
+{
+  ?sens a brick:Luminance_Sensor ;
+    bframe:isPointOf ?light ;
+    bframe:isLocatedIn ?space .
+  ?light a brick:Lighting .
+  ?sens sosa:observes ?prop .
+
+  ?prop qudt:numericValue ?value .
+  ?value math:notLessThan "500"^^xsd:double .
+
+  ?command a brick:Luminance_Command ;
+    sosa:actsOnProperty ?propcomm .
+  ?lightingOrSystem bframe:hasPoint ?command ;
+    bframe:feeds ?space .
+  ?space bframe:isPartOf building:Building_B3 .
+  ?propcomm  rdf:value ?val .
+}
+=>
+{
+  [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
+} .
+{
+  ?sens a brick:Luminance_Sensor ;
+    bframe:isPointOf ?light ;
+    bframe:isLocatedIn building:Building_B3 .
+  ?light a brick:Lighting .
+  ?sens sosa:observes ?prop .
+
+  ?prop qudt:numericValue ?value .
+  ?value math:notLessThan "500"^^xsd:double .
+
+  ?command a brick:Luminance_Command ;
+    sosa:actsOnProperty ?propcomm .
+  ?lightingOrSystem bframe:hasPoint ?command ;
+    bframe:feeds building:Building_B3 .
+  ?propcomm  rdf:value ?val .
+}
+=>
+{
+  [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
+} .
+
+# Turn on stuff if there is somebody in the room
+{
+  ?sens a brick:Luminance_Sensor ;
+    bframe:isPointOf ?light ;
+    bframe:isLocatedIn ?space .
+  ?light a brick:Lighting .
+  ?sens sosa:observes ?prop .
+
+  ?prop qudt:numericValue ?value .
+  ?value math:lessThan "500"^^xsd:double .
+
+  ?command a brick:Luminance_Command ;
+    sosa:actsOnProperty ?propcomm .
+  ?lightingOrSystem bframe:hasPoint ?command ;
+    bframe:feeds ?space .
+  ?space bframe:isPartOf building:Building_B3 .
+  ?propcomm rdf:value ?val .
+}
+=>
+{
+  [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "on" . } .
+} .
+{
+  ?sens a brick:Luminance_Sensor ;
+    bframe:isPointOf ?light ;
+    bframe:isLocatedIn building:Building_B3 .
+  ?light a brick:Lighting .
+  ?sens sosa:observes ?prop .
+
+  ?prop qudt:numericValue ?value .
+  ?value math:lessThan "500"^^xsd:double .
+
+  ?command a brick:Luminance_Command ;
+    sosa:actsOnProperty ?propcomm .
+  ?lightingOrSystem bframe:hasPoint ?command ;
+    bframe:feeds building:Building_B3 .
+  ?propcomm rdf:value ?val .
+}
+=>
+{
+  [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "on" . } .
+} .
+
