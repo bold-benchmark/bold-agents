@@ -23,7 +23,7 @@
   ?occsens a brick:Occupancy_Sensor ;
     bframe:isLocatedIn ?space ;
     sosa:observes ?occprop .
-  ?occprop rdf:value "on" .
+  ?occprop rdf:value "off" .
 
   # the light to switch
   ?command a brick:Luminance_Command ;
@@ -42,7 +42,7 @@
   ?occsens a brick:Occupancy_Sensor ;
     bframe:isLocatedIn building:Building_B3 ;
     sosa:observes ?occprop .
-  ?occprop rdf:value "on" .
+  ?occprop rdf:value "off" .
 
   # the light to switch
   ?command a brick:Luminance_Command ;
