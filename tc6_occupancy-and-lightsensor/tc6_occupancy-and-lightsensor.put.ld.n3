@@ -23,7 +23,7 @@
   ?occsens a brick:Occupancy_Sensor ;
     bframe:isLocatedIn ?space ;
     sosa:observes ?occprop .
-  ?occprop rdf:value "on" .
+  ?occprop rdf:value "off" .
 
   # the light to switch
   ?command a brick:Luminance_Command ;
@@ -42,7 +42,7 @@
   ?occsens a brick:Occupancy_Sensor ;
     bframe:isLocatedIn building:Building_B3 ;
     sosa:observes ?occprop .
-  ?occprop rdf:value "on" .
+  ?occprop rdf:value "off" .
 
   # the light to switch
   ?command a brick:Luminance_Command ;
@@ -56,19 +56,13 @@
   [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
 } .
 
-# Turn on stuff if there is somebody in the room and the lighting is below a certain threshold
+# Turn off stuff if there is somebody in the room and the lighting is above a global threshold
 {
   # somebody in the room
   ?occsens a brick:Occupancy_Sensor ;
     bframe:isLocatedIn ?space ;
     sosa:observes ?occprop .
   ?occprop rdf:value "on" .
-
-  # threshold
-  ?sp a brick:Luminance_Setpoint ;
-    bframe:isLocatedIn ?space ;
-    ssn:hasProperty ?spprop .
-  ?spprop qudt:numericValue ?threshold .
 
   # actual light sensor value
   ?lumsens a brick:Luminance_Sensor ;
@@ -77,7 +71,64 @@
   ?lumprop qudt:numericValue ?lumvalue .
 
   # the comparison
-  ?lumvalue math:lessThan ?threshold .
+  ?lumvalue math:notLessThan "500"^^xsd:double . .
+
+  # the light to switch
+  ?command a brick:Luminance_Command ;
+    sosa:actsOnProperty ?propcomm .
+  ?light bframe:hasPoint ?command ;
+    bframe:feeds ?space .
+  ?space bframe:isPartOf building:Building_B3 .
+  ?propcomm rdf:value ?val .
+}
+=>
+{
+  [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
+} .
+{
+  # somebody in the room
+  ?occsens a brick:Occupancy_Sensor ;
+    bframe:isLocatedIn building:Building_B3 ;
+    sosa:observes ?occprop .
+  ?occprop rdf:value "on" .
+
+  # actual light sensor value
+  ?lumsens a brick:Luminance_Sensor ;
+    bframe:isLocatedIn ?space ;
+    sosa:observes ?lumprop .
+  ?lumprop qudt:numericValue ?lumvalue .
+
+  # the comparison
+  ?lumvalue math:notLessThan "500"^^xsd:double . .
+
+  # the light to switch
+  ?command a brick:Luminance_Command ;
+    sosa:actsOnProperty ?propcomm .
+  ?light bframe:hasPoint ?command ;
+    bframe:feeds building:Building_B3 .
+  ?propcomm rdf:value ?val .
+}
+=>
+{
+  [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
+} .
+
+# Turn on stuff if there is somebody in the room and the lighting is below a global threshold
+{
+  # somebody in the room
+  ?occsens a brick:Occupancy_Sensor ;
+    bframe:isLocatedIn ?space ;
+    sosa:observes ?occprop .
+  ?occprop rdf:value "on" .
+
+  # actual light sensor value
+  ?lumsens a brick:Luminance_Sensor ;
+    bframe:isLocatedIn ?space ;
+    sosa:observes ?lumprop .
+  ?lumprop qudt:numericValue ?lumvalue .
+
+  # the comparison
+  ?lumvalue math:lessThan "500"^^xsd:double . .
 
   # the light to switch
   ?command a brick:Luminance_Command ;
@@ -98,12 +149,6 @@
     sosa:observes ?occprop .
   ?occprop rdf:value "on" .
 
-  # threshold
-  ?sp a brick:Luminance_Setpoint ;
-    bframe:isLocatedIn ?space ;
-    ssn:hasProperty ?spprop .
-  ?spprop qudt:numericValue ?threshold .
-
   # actual light sensor value
   ?lumsens a brick:Luminance_Sensor ;
     bframe:isLocatedIn ?space ;
@@ -111,7 +156,7 @@
   ?lumprop qudt:numericValue ?lumvalue .
 
   # the comparison
-  ?lumvalue math:lessThan ?threshold .
+  ?lumvalue math:lessThan "500"^^xsd:double . .
 
   # the light to switch
   ?command a brick:Luminance_Command ;
