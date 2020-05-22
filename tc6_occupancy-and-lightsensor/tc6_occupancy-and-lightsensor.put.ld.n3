@@ -1,0 +1,127 @@
+@prefix building: <http://127.0.1.1:8080/> .
+
+@prefix brick: <http://buildsys.org/ontologies/Brick#> .
+@prefix bframe: <http://buildsys.org/ontologies/BrickFrame#> .
+@prefix http: <http://www.w3.org/2011/http#> .
+@prefix http_m: <http://www.w3.org/2011/http-methods#> .
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix qudt: <http://qudt.org/schema/qudt#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix saref: <https://w3id.org/saref#> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix string: <http://www.w3.org/2000/10/swap/string#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix sim: <http://ti.rw.fau.de/sim#> .
+
+# Turn off stuff if there is nobody in the room
+{
+  # somebody in the room
+  ?occsens a brick:Occupancy_Sensor ;
+    bframe:isLocatedIn ?space ;
+    sosa:observes ?occprop .
+  ?occprop rdf:value "on" .
+
+  # the light to switch
+  ?command a brick:Luminance_Command ;
+    sosa:actsOnProperty ?propcomm .
+  ?lightingOrSystem bframe:hasPoint ?command ;
+    bframe:feeds ?space .
+  ?space bframe:isPartOf building:Building_B3 .
+  ?propcomm  rdf:value ?val .
+}
+=>
+{
+  [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
+} .
+{
+  # somebody in the room
+  ?occsens a brick:Occupancy_Sensor ;
+    bframe:isLocatedIn building:Building_B3 ;
+    sosa:observes ?occprop .
+  ?occprop rdf:value "on" .
+
+  # the light to switch
+  ?command a brick:Luminance_Command ;
+    sosa:actsOnProperty ?propcomm .
+  ?lightingOrSystem bframe:hasPoint ?command ;
+    bframe:feeds building:Building_B3 .
+  ?propcomm  rdf:value ?val .
+}
+=>
+{
+  [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
+} .
+
+# Turn on stuff if there is somebody in the room and the lighting is below a certain threshold
+{
+  # somebody in the room
+  ?occsens a brick:Occupancy_Sensor ;
+    bframe:isLocatedIn ?space ;
+    sosa:observes ?occprop .
+  ?occprop rdf:value "on" .
+
+  # threshold
+  ?sp a brick:Luminance_Setpoint ;
+    bframe:isLocatedIn ?space ;
+    ssn:hasProperty ?spprop .
+  ?spprop qudt:numericValue ?threshold .
+
+  # actual light sensor value
+  ?lumsens a brick:Luminance_Sensor ;
+    bframe:isLocatedIn ?space ;
+    sosa:observes ?lumprop .
+  ?lumprop qudt:numericValue ?lumvalue .
+
+  # the comparison
+  ?lumvalue math:lessThan ?threshold .
+
+  # the light to switch
+  ?command a brick:Luminance_Command ;
+    sosa:actsOnProperty ?propcomm .
+  ?light bframe:hasPoint ?command ;
+    bframe:feeds ?space .
+  ?space bframe:isPartOf building:Building_B3 .
+  ?propcomm rdf:value ?val .
+}
+=>
+{
+  [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "on" . } .
+} .
+{
+  # somebody in the room
+  ?occsens a brick:Occupancy_Sensor ;
+    bframe:isLocatedIn building:Building_B3 ;
+    sosa:observes ?occprop .
+  ?occprop rdf:value "on" .
+
+  # threshold
+  ?sp a brick:Luminance_Setpoint ;
+    bframe:isLocatedIn ?space ;
+    ssn:hasProperty ?spprop .
+  ?spprop qudt:numericValue ?threshold .
+
+  # actual light sensor value
+  ?lumsens a brick:Luminance_Sensor ;
+    bframe:isLocatedIn ?space ;
+    sosa:observes ?lumprop .
+  ?lumprop qudt:numericValue ?lumvalue .
+
+  # the comparison
+  ?lumvalue math:lessThan ?threshold .
+
+  # the light to switch
+  ?command a brick:Luminance_Command ;
+    sosa:actsOnProperty ?propcomm .
+  ?light bframe:hasPoint ?command ;
+    bframe:feeds building:Building_B3 .
+  ?propcomm rdf:value ?val .
+}
+=>
+{
+  [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "on" . } .
+} .
+
