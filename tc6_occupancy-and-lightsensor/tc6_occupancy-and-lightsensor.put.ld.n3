@@ -71,7 +71,7 @@
   ?lumprop qudt:numericValue ?lumvalue .
 
   # the comparison
-  ?lumvalue math:notLessThan "500"^^xsd:double . .
+  ?lumvalue math:notLessThan "500"^^xsd:double .
 
   # the light to switch
   ?command a brick:Luminance_Command ;
@@ -99,7 +99,7 @@
   ?lumprop qudt:numericValue ?lumvalue .
 
   # the comparison
-  ?lumvalue math:notLessThan "500"^^xsd:double . .
+  ?lumvalue math:notLessThan "500"^^xsd:double .
 
   # the light to switch
   ?command a brick:Luminance_Command ;
@@ -128,7 +128,7 @@
   ?lumprop qudt:numericValue ?lumvalue .
 
   # the comparison
-  ?lumvalue math:lessThan "500"^^xsd:double . .
+  ?lumvalue math:lessThan "500"^^xsd:double .
 
   # the light to switch
   ?command a brick:Luminance_Command ;
@@ -156,7 +156,7 @@
   ?lumprop qudt:numericValue ?lumvalue .
 
   # the comparison
-  ?lumvalue math:lessThan "500"^^xsd:double . .
+  ?lumvalue math:lessThan "500"^^xsd:double .
 
   # the light to switch
   ?command a brick:Luminance_Command ;
