@@ -18,7 +18,7 @@
 
 { [] http:mthd http_m:GET; http:requestURI <http://127.0.1.1:8080/sim> . }
 
-# Turn off stuff between sunrise and sunset
+# Turn stuff off between sunrise and sunset
 {
   <http://127.0.1.1:8080/sim>
     sim:currentTime ?currTime ;
@@ -36,7 +36,7 @@
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds ?space .
   ?space bframe:isPartOf building:Building_B3 .
-  ?propcomm  rdf:value ?val .
+  ?propcomm  rdf:value "on" .
 }
 =>
 {
@@ -58,14 +58,14 @@
     sosa:actsOnProperty ?propcomm .
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds building:Building_B3 .
-  ?propcomm  rdf:value ?val .
+  ?propcomm  rdf:value "on" .
 }
 =>
 {
   [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
 } .
 
-# Turn on stuff on before sunrise
+# Turn stuff on before sunrise
 {
   <http://127.0.1.1:8080/sim>
     sim:currentTime ?currTime ;
@@ -80,7 +80,7 @@
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds ?space .
   ?space bframe:isPartOf building:Building_B3 .
-  ?propcomm rdf:value ?val .
+  ?propcomm rdf:value "off" .
 }
 =>
 {
@@ -99,14 +99,14 @@
     sosa:actsOnProperty ?propcomm .
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds building:Building_B3 .
-  ?propcomm rdf:value ?val .
+  ?propcomm rdf:value "off" .
 }
 =>
 {
   [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "on" . } .
 } .
 
-# Turn on stuff on after sunset
+# Turn stuff on after sunset
 {
   <http://127.0.1.1:8080/sim>
     sim:currentTime ?currTime ;
@@ -121,7 +121,7 @@
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds ?space .
   ?space bframe:isPartOf building:Building_B3 .
-  ?propcomm rdf:value ?val .
+  ?propcomm rdf:value "off" .
 }
 =>
 {
@@ -140,7 +140,7 @@
     sosa:actsOnProperty ?propcomm .
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds building:Building_B3 .
-  ?propcomm rdf:value ?val .
+  ?propcomm rdf:value "off" .
 }
 =>
 {
