@@ -35,7 +35,7 @@
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds ?space .
   ?space bframe:isPartOf building:Building_B3 .
-  ?propcomm  rdf:value ?val .
+  ?propcomm  rdf:value "on" .
 }
 =>
 {
@@ -53,7 +53,7 @@
     sosa:actsOnProperty ?propcomm .
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds building:Building_B3 .
-  ?propcomm  rdf:value ?val .
+  ?propcomm  rdf:value "on" .
 }
 =>
 {
@@ -74,7 +74,7 @@
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds ?space .
   ?space bframe:isPartOf building:Building_B3 .
-  ?propcomm rdf:value ?val .
+  ?propcomm rdf:value "off" .
 }
 =>
 {
@@ -92,7 +92,7 @@
     sosa:actsOnProperty ?propcomm .
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds building:Building_B3 .
-  ?propcomm rdf:value ?val .
+  ?propcomm rdf:value "off" .
 }
 =>
 {

@@ -18,7 +18,7 @@
 
 @prefix sim: <http://ti.rw.fau.de/sim#> .
 
-# Turn off stuff if there is nobody in the room
+# Turn off stuff if light in the room is greater than 500 lux
 {
   ?sens a brick:Luminance_Sensor ;
     bframe:isPointOf ?light ;
@@ -34,7 +34,7 @@
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds ?space .
   ?space bframe:isPartOf building:Building_B3 .
-  ?propcomm  rdf:value ?val .
+  ?propcomm  rdf:value "on" .
 }
 =>
 {
@@ -54,14 +54,14 @@
     sosa:actsOnProperty ?propcomm .
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds building:Building_B3 .
-  ?propcomm  rdf:value ?val .
+  ?propcomm  rdf:value "on" .
 }
 =>
 {
   [] http:mthd http_m:PUT; http:requestURI ?propcomm ; http:body { ?propcomm  rdf:value "off" . } .
 } .
 
-# Turn on stuff if there is somebody in the room
+# Turn on stuff if light in the room is lower than 500 lux
 {
   ?sens a brick:Luminance_Sensor ;
     bframe:isPointOf ?light ;
@@ -77,7 +77,7 @@
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds ?space .
   ?space bframe:isPartOf building:Building_B3 .
-  ?propcomm rdf:value ?val .
+  ?propcomm rdf:value "off" .
 }
 =>
 {
@@ -97,7 +97,7 @@
     sosa:actsOnProperty ?propcomm .
   ?lightingOrSystem bframe:hasPoint ?command ;
     bframe:feeds building:Building_B3 .
-  ?propcomm rdf:value ?val .
+  ?propcomm rdf:value "off" .
 }
 =>
 {
