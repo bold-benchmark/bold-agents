@@ -2,3 +2,6 @@
 
 # transititvity
 { ?a bframe:hasPart ?b . ?b bframe:hasPart ?c . } => { ?a bframe:hasPart ?c . } .
+
+# reflexivity
+{ ?a bframe:hasPart ?b . } => { ?a bframe:hasPart ?a . ?b bframe:hasPart ?b . } .
