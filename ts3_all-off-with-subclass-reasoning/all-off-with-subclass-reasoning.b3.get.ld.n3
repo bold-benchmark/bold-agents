@@ -8,6 +8,8 @@
 @prefix saref: <https://w3id.org/saref#> .
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
 @prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix string: <http://www.w3.org/2000/10/swap/string#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
 
 # Defining subdivisions of the building for scaling up and down the benchmark
 building:fiverooms bframe:hasPart
@@ -53,6 +55,8 @@ building:Room_SOR42_F_20 .
 {
   building:Building_B3 bframe:hasPart ?part .
   ?part a ?class .
+  ?class log:uriToString ?str .
+  ?str string:contains "127.0.1.1" . # only on localhost
 }
 =>
 {
