@@ -1,0 +1,16 @@
+@prefix : <#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# single-loop tasks/eventually
+:ts1 rdfs:label "light on" ; rdfs:seeAlso <query/ts1.rq> ; a :Achievement .
+:ts2 rdfs:label "light not toggled" ; rdfs:seeAlso <query/ts2.rq> ; a :Achievement . 
+:ts3 rdfs:label "light on in specific rooms" ; rdfs:seeAlso <query/ts3.rq> ; a :Achievement .
+
+# continuous-loop tasks/always
+:tc1 rdfs:label "light off (on) during the day (night)" ; rdfs:seeAlso <query/tc1.rq> ; a :Maintenance .
+:tc2 rdfs:label "light off (on) when floor is open (closed)" ; rdfs:seeAlso <query/tc2.rq> ; a :Maintenance .
+:tc3 rdfs:label "light off (on) and outside illuminance is low (high)" ; rdfs:seealso <query/tc3.rq> ; a :Maintenance .
+:tc4 rdfs:label "light off (on) and room illuminance low (high)" ; rdfs:seeAlso <query/tc4.rq> ;  a :Maintenance .
+:tc5 rdfs:label "light off (on) and room occupant (not) detected" ; rdfs:seeAlso <query/tc5.rq> ; a :Maintenance .
+:tc6 rdfs:label "light off (on), occupant (not) detected and illuminance low (high)" ; rdfs:seeAlso <query/tc6.rq> ; a :Maintenance .
+:tc7 rdfs:label "light off (on), occupant (not) detected and illuminance below (above) desired level" ; rdfs:seeAlso <query/tc7.rq> ; a :Maintenance .

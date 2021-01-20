@@ -1,0 +1,40 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix faults: <faults.ttl#> .
+@prefix : <#> .
+
+# single-loop tasks/eventually
+:ts1 dc:identifier "all-off" ; a :Single .
+:ts2 dc:identifier "toggle" ; a :Single .
+:ts3 dc:identifier "all-off-with-subclass-reasoning" ; a :Single .
+
+# continuous-loop tasks/always
+:tc1 dc:identifier "sun-hour-based-control" ; a :Continouous .
+:tc2 dc:identifier "work-hour-based-control" ; a :Continouous .
+:tc3 dc:identifier "??" ; a :Continouous .
+:tc4 dc:identifier "lightsensor-per-room" ; a :Continouous .
+:tc5 dc:identifier "occupancy-based-control" ; a :Continouous .
+:tc6 dc:identifier "occupancy-and-lightsensor" ; a :Continouous .
+:tc7 dc:identifier "occupany-and-custom-lightsensor" ; a :Continouous .
+
+# link tasks to achievment faults
+:ts1 :goal faults:ts1 .
+:ts2 :goal faults:ts2 .
+:ts3 :goal faults:ts3 .
+
+# link tasks to maintanence faults
+:tc1 :goal faults:tc1 .
+:tc2 :goal faults:tc2 .
+:tc3 :goal faults:tc3 .
+:tc4 :goal faults:tc4 .
+:tc5 :goal faults:tc5 .
+:tc6 :goal faults:tc6 .
+:tc7 :goal faults:tc7 .
+
+# information and achievement
+:ts1 :information [ rdfs:seeAlso <ts1_all-off/all-off.b3.get.ld.n3> ; rdfs:label "gather information for task ts1" ; a :Information ] ;
+     :achievement [ rdfs:seeAlso <ts1_all-off/all-off.b3.put.ld.n3> ; rdfs:label "decide on action for task ts1" ; a :Achievement ] .
+
+# information and maintenance 
+:tc1 :information [ rdfs:seeAlso <tc1_sun-hour-based-control/sun-hour-based-control.get.ld.n3> ; rdfs:label "gather information for task tc1" ; a :Information ] ;
+     :maintenance [ rdfs:seeAlso <tc1_sun-hour-based-control/sun-hour-based-control.put.ld.n3> ; rdfs:label "decide on action for task tc1" ; a :Maintenance ]  .
