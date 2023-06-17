@@ -1,10 +1,29 @@
 #!/bin/bash
 
+# Checking for inotifywait
+command -v inotifywait >/dev/null 2>&1 || { echo >&2 "Requires inotifywait but it's not installed.  Aborting."; exit 1; }
+
+# Checking for Linked Data-Fu agent runtime
+if [ ! -f "ldfu.sh" ] ; then
+echo "please create ldfu.sh based on ldfu.sh.template"
+exit 1
+fi
+
+# Checking for bold server
+if [ ! -d "../bold-server" ] ; then
+echo "please checkout the bold-server repository into the folder that contains the bold-agents folder and compile"
+exit 1
+fi
+
+# Checking for compiled bold server
+if [ ! -f "../bold-server/build/install/bold-server/bin/bold-server" ] ; then
+echo "please compile the bold server"
+exit 1
+fi
+
 set -e
 
 DATE=`date --rfc-3339=seconds | sed 's/ /T/g'`
-
-rm -f ../bbench-server/query/t*.tsv
 
 ITERATIONS=1
 
@@ -14,6 +33,9 @@ echo "=================================BOLD=====================================
 
 echo "Benchmarking with $ITERATIONS iterations..."
 
+echo "Deleting temporary files from past run"
+rm -f ../bold-server/query/interactions.tsv
+rm -f ../bold-server/query/faults.tsv
 rm -f ldf.out
 
 beginswith() { case $2 in "$1"*) true;; *) false;; esac; }
@@ -49,8 +71,8 @@ function tlo {
 		#else
 		#LDFU_PARAM=""
 
-		cd ../bbench-server/
-		./build/install/bold-benchmark/bin/bold-benchmark $TASK_SHORTHAND &
+		cd ../bold-server/
+		./build/install/bold-server/bin/bold-server $TASK_SHORTHAND &
 		SERVER_PID=$!
 		cd -
 
@@ -61,7 +83,7 @@ function tlo {
 		fi
 
 		echo "Starting simulation"
-		curl -X PUT "http://127.0.1.1:8080/sim" --data-binary @../bbench-server/data/sim.ttl -Hcontent-type:text/turtle
+		curl -X PUT "http://127.0.1.1:8080/sim" --data-binary @../bold-server/data/sim.ttl -Hcontent-type:text/turtle
 
 		echo "Warming up LDFU"
 		./ldfu.sh -p brick*.n3 -p $2/*.x.n3 $LDFU_PARAM 2> ldfu.out > ldfu.out & 
@@ -76,32 +98,36 @@ function tlo {
 		echo "Stopping simulation"
 		curl -X DELETE "http://127.0.1.1:8080/sim" & 
 
-		while read outputtsv ; do if [ "$outputtsv" = $TASK_SHORTHAND.tsv ]; then break; fi; done < <( timeout 600 inotifywait -e close --format "%f" --quiet "../bbench-server/query/" --monitor)
+		while read outputtsv ; do if [ "$outputtsv" = interactions.tsv ]; then break; fi; done < <( timeout 600 inotifywait -e close --format "%f" --quiet "../bold-server/" --monitor)
 
-		rm -f ../bbench-server/query/$TASK_SHORTHAND.tsv
+		rm -f ../bold-server/query/interactions.tsv ../bold-server/query/faults.tsv
 
+		sleep 20
 		echo "Starting simulation"
-		curl -X PUT "http://127.0.1.1:8080/sim" --data-binary @../bbench-server/data/sim.ttl -Hcontent-type:text/turtle
+		curl -X PUT "http://127.0.1.1:8080/sim" --data-binary @../bold-server/data/sim.ttl -Hcontent-type:text/turtle
 
 		echo "Resuming LDFU"
 		kill -s SIGCONT $LDFU_PID $(list_descendants $LDFU_PID)
 
-		while read outputtsv ; do if [ "$outputtsv" = $TASK_SHORTHAND.tsv ]; then break; fi; done < <( timeout 180 inotifywait -e create --format "%f" --quiet "../bbench-server/query/" --monitor)
+		while read outputtsv ; do if [ "$outputtsv" = interactions.tsv ]; then break; fi; done < <( timeout 180 inotifywait -e create --format "%f" --quiet "../bold-server/" --monitor)
 
 		echo "Killing LDFU"
 		kill $LDFU_PID $(list_descendants $LDFU_PID)
 
-		while read outputtsv ; do if [ "$outputtsv" = $TASK_SHORTHAND.tsv ]; then break; fi; done < <( timeout 600 inotifywait -e close --format "%f" --quiet "../bbench-server/query/" --monitor)
+		while read outputtsv ; do if [ "$outputtsv" = interactions.tsv ]; then break; fi; done < <( timeout 600 inotifywait -e close --format "%f" --quiet "../bold-server/" --monitor)
 
 
-		if [ -f "../bbench-server/query/$TASK_SHORTHAND.tsv" ] ; then
+		if [ -f "../bold-server/interactions.tsv" ] ; then
 			echo "Found output. Moving..."
-			mv "../bbench-server/query/$TASK_SHORTHAND.tsv" "../bbench-server/query/$DATE-$TASK_SHORTHAND-$3-$1-$i.tsv"
+			mv "../bold-server/interactions.tsv" "../bold-server/$DATE-$TASK_SHORTHAND-$3-$1-$i-interactions.tsv"
+			mv "../bold-server/faults.tsv" "../bold-server/$DATE-$TASK_SHORTHAND-$3-$1-$i-faults.tsv"
 		else
 			echo "Found no output."
 		fi
 
+		echo "Killing the BOLD server"
 		kill $SERVER_PID
+		sleep 10
 	done
 }
 
