@@ -4,11 +4,11 @@ This repository contains sample implementations for agent specifications in rule
 
 The agent specifications require the [BOLD server](https://github.com/bold-benchmark/bold-server) to be initialised with the data from Building 3.
 
-A self-contained simple example can be found in [ts0_demo-coffeedesk-on.n3], which turns on the lights at the Coffee Desk.
+A self-contained simple example can be found in [ts0_demo-coffeedesk-on.n3](ts0_demo-coffeedesk-on.n3), which turns on the lights at the Coffee Desk.
 
-The other implementations are of the following behaviour. Next to the behaviour, we describe what behaviour we would consider as faulty.
+The other implementations in the folders are of the following behaviour (here we split the rules into multiple files to allow for scalability experiments). Next to the behaviour, we describe what behaviour we would consider as faulty.
 
-Two shell scripts ([run-agent.sh] and [benchmarking.sh]) can serve as examples for how to run those agents, and for how to run all agents for benchmarking, respectively.
+Two shell scripts ([run-agent.sh](run-agent.sh) and [benchmarking.sh](benchmarking.sh)) can serve as examples for how to run those agents, and for how to run all agents for benchmarking, respectively.
 
 ## Single-Loop: Simple control of lights
 We implement the behaviour that a janitor would trigger when the whole building closes (TS1) or when they test functionalities of the system (TS2 and TS3).
