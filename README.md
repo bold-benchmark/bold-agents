@@ -20,7 +20,8 @@ Two shell scripts ([run-agent.sh](run-agent.sh) and [benchmarking.sh](benchmarki
   * Find that the coffee desk is fed by a lighting system `http://127.0.1.1:8080/gsp/Lighting_System_42GFLCoffeeDock`
   * Follow the link to this lighting system by now dereferencing its URI and inspect the representation
   * where you find a SSN property resource `http://127.0.1.1:8080/gsp/property-Lighting_System_42GFLCoffeeDock#it`
-  * that has the value `"off"`
+  * to which you follow the link
+  * and you will find that it has the rdf:value `"off"`
 * Inspect `ts0_demo-coffeedesk-on.n3` and think about what it may do.
 * Run the ts0 agent `./ldfu.sh -p brick*n3 -p ts0_demo-coffeedesk-on.n3`
   * that with the first set of rules considers the Brick ontology, e.g. that "feeds" is the inverse of "isFedby"
