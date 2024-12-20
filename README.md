@@ -13,18 +13,24 @@ Two shell scripts ([run-agent.sh](run-agent.sh) and [benchmarking.sh](benchmarki
 ## Running instructions for the self-contained simple example
 * Get the [BOLD server](https://github.com/bold-benchmark/bold-server)
 * Get [Linked Data-Fu](https://linked-data-fu.github.io/)
-* Unpack Linked Data-Fu and create `ldfu.sh` based on `ldfu.sh.template`
-* Start the BOLD server on `127.0.1.1:8080` (i.e. the default) with ts1
+* Unpack Linked Data-Fu
+* Create `ldfu.sh` in the root of the bold-agents folder (probably the same as this readme) based on `ldfu.sh.template`
+* Start the BOLD server on `127.0.1.1:8080` (i.e. the default) with task name `ts1`
 * Inspect `http://127.0.1.1:8080/gsp/Room_CoffeeDesk`, e.g. preferably using CURL, RAPPER or Firefox with the RDF browser extension installed.
   * Find that the coffee desk is fed by a lighting system `http://127.0.1.1:8080/gsp/Lighting_System_42GFLCoffeeDock`
-  * ...with a property resource `http://127.0.1.1:8080/gsp/property-Lighting_System_42GFLCoffeeDock#it`
-  * that has the value `"off"`
+  * Follow the link to this lighting system by now dereferencing its URI and inspect the representation
+  * where you find a SSN property resource `http://127.0.1.1:8080/gsp/property-Lighting_System_42GFLCoffeeDock#it`
+  * to which you follow the link
+  * and you will find that it has the rdf:value `"off"`
 * Inspect `ts0_demo-coffeedesk-on.n3` and think about what it may do.
 * Run the ts0 agent `./ldfu.sh -p brick*n3 -p ts0_demo-coffeedesk-on.n3`
   * that with the first set of rules considers the Brick ontology, e.g. that "feeds" is the inverse of "isFedby"
   * that with `ts0_demo-coffeedesk-on.n3` retrieves the data and turns on the light
 * Dereference the property resource again and see that the value is `"on"` 💡
 
+Congratulations, you just ran a simple rule-based agent that performed dereferencing, reasoning, link following, and interaction, which turned on the lights at the Coffee Desk. 🥳
+
+You now deserve a coffee. ☕ 
 
 ## Single-Loop: Simple control of lights
 We implement the behaviour that a janitor would trigger when the whole building closes (TS1) or when they test functionalities of the system (TS2 and TS3).
