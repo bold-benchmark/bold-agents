@@ -1,2 +1,4 @@
 #!/bin/sh
+
+# for example, /home/user/Downloads/linked-data-fu-0.9.13/bin/ldfu.sh $@
 /path/to/ldfu.sh $@
