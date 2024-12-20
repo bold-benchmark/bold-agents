@@ -14,7 +14,7 @@ Two shell scripts ([run-agent.sh](run-agent.sh) and [benchmarking.sh](benchmarki
 * Get the [BOLD server](https://github.com/bold-benchmark/bold-server)
 * Get [Linked Data-Fu](https://linked-data-fu.github.io/)
 * Unpack Linked Data-Fu and create `ldfu.sh` based on `ldfu.sh.template`
-* Start the BOLD server on `127.0.1.1:8080` (i.e. the default) with ts1
+* Start the BOLD server on `127.0.1.1:8080` (i.e. the default) with `ts1`
 * Inspect `http://127.0.1.1:8080/gsp/Room_CoffeeDesk`, e.g. preferably using CURL, RAPPER or Firefox with the RDF browser extension installed.
   * Find that the coffee desk is fed by a lighting system `http://127.0.1.1:8080/gsp/Lighting_System_42GFLCoffeeDock`
   * Follow the link to this lighting system by now dereferencing its URI and inspect the representation
