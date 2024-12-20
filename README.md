@@ -13,7 +13,8 @@ Two shell scripts ([run-agent.sh](run-agent.sh) and [benchmarking.sh](benchmarki
 ## Running instructions for the self-contained simple example
 * Get the [BOLD server](https://github.com/bold-benchmark/bold-server)
 * Get [Linked Data-Fu](https://linked-data-fu.github.io/)
-* Unpack Linked Data-Fu and create `ldfu.sh` based on `ldfu.sh.template`
+* Unpack Linked Data-Fu
+* Create `ldfu.sh` in the root of the bold-agents folder (probably the same as this readme) based on `ldfu.sh.template`
 * Start the BOLD server on `127.0.1.1:8080` (i.e. the default) with `ts1`
 * Inspect `http://127.0.1.1:8080/gsp/Room_CoffeeDesk`, e.g. preferably using CURL, RAPPER or Firefox with the RDF browser extension installed.
   * Find that the coffee desk is fed by a lighting system `http://127.0.1.1:8080/gsp/Lighting_System_42GFLCoffeeDock`
@@ -26,6 +27,9 @@ Two shell scripts ([run-agent.sh](run-agent.sh) and [benchmarking.sh](benchmarki
   * that with `ts0_demo-coffeedesk-on.n3` retrieves the data and turns on the light
 * Dereference the property resource again and see that the value is `"on"` 💡
 
+Congratulations, you just ran a simple rule-based agent that performed dereferencing, reasoning, link following, and interaction, which turned on the lights at the Coffee Desk. 🥳
+
+You now deserve a coffee. ☕ 
 
 ## Single-Loop: Simple control of lights
 We implement the behaviour that a janitor would trigger when the whole building closes (TS1) or when they test functionalities of the system (TS2 and TS3).
