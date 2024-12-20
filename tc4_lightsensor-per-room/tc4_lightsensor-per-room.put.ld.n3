@@ -1,5 +1,5 @@
 
-@prefix building: <http://127.0.1.1:8080/> .
+@prefix building: <http://127.0.1.1:8080/gsp/> .
 
 @prefix brick: <http://buildsys.org/ontologies/Brick#> .
 @prefix bframe: <http://buildsys.org/ontologies/BrickFrame#> .
