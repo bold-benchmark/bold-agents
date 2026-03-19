@@ -114,3 +114,6 @@ TC7, the most challenging task of the benchmark adds one more constraint
 to TC6: instead of a global illuminance threshold, agents have to make decision
 based on the preferences of occupants, which they can update at any time
 
+## Acknowledgments
+
+This work was partially funded by the German Federal Ministry of Research, Technology, and Space (BMFTR) through the MOSAIK project (FKZ 01IS18070A) and the NeSyPlan project (FKZ 16IS23052B), next to the French-German University (DFH-UFA) in the SeReCo project (CDFA-02-22).
